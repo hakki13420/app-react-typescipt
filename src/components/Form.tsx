@@ -22,10 +22,10 @@ const Form = ({tabs, setTabs, setSubs}:FromProps) => {
         avatar:"",
         description:""
     })
-    const userNameRef:React.LegacyRef<HTMLInputElement>|string=useRef(null)
-    const timesRef:React.LegacyRef<HTMLInputElement> | number=useRef(null)
-    const avatarRef:React.LegacyRef<HTMLInputElement> | undefined|string=useRef(null)
-    const descriptionRef:React.LegacyRef<HTMLTextAreaElement> | undefined|string=useRef(null)
+    const userNameRef=useRef<HTMLInputElement>(null)
+    const timesRef=useRef<HTMLInputElement>(null)
+    const avatarRef=useRef<HTMLInputElement>(null)
+    const descriptionRef=useRef<HTMLTextAreaElement>(null)
 
     const handlChange=(e:(React.ChangeEvent<HTMLInputElement>|
         React.ChangeEvent<HTMLTextAreaElement>))=>{
