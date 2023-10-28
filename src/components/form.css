@@ -1,0 +1,28 @@
+.form{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 70%;
+    padding: 3rem;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+input{
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+}
+input[type=submit]{
+    cursor: pointer;
+}
+input[type=submit]:hover{
+    opacity: 0.7;
+}

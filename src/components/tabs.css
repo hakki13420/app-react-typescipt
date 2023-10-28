@@ -1,0 +1,21 @@
+.wrapper{
+    width: 100%;
+}
+.tabs{
+    display: flex;
+    padding: 0 3rem;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.button{
+    border-radius: 4px 4px 0 0;
+    opacity: 0.4;
+}
+.button:focus{
+    outline: none;
+}
+.active{
+    border-bottom: none;
+    border: 1px solid teal;
+    opacity: 1;    
+}
