@@ -1,7 +1,9 @@
 import './form.css'
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { Sub } from "../types"
 import Tabs from './Tabs'
+import useForm from '../hooks/useForm'
+
 
 interface FromProps{
     setSubs:React.Dispatch<React.SetStateAction<Sub[]>>,
@@ -9,19 +11,12 @@ interface FromProps{
     setTabs:React.Dispatch<React.SetStateAction<1|2>>
 }
 
-interface FormState {
-    inputsValue:Sub
-}
-
 
 const Form = ({tabs, setTabs, setSubs}:FromProps) => {
 
-    const [inputsValue, setInputValue]=useState<FormState['inputsValue']>({
-        userName:"",
-        times: 0,
-        avatar:"",
-        description:""
-    })
+    //const [inputsValue, setInputValue]=useState<FormState['inputsValue']>(INITIAL_STATE)
+    const [inputsValue, dispatch]=useForm()
+    
     const userNameRef=useRef<HTMLInputElement>(null)
     const timesRef=useRef<HTMLInputElement>(null)
     const avatarRef=useRef<HTMLInputElement>(null)
@@ -29,17 +24,30 @@ const Form = ({tabs, setTabs, setSubs}:FromProps) => {
 
     const handlChange=(e:(React.ChangeEvent<HTMLInputElement>|
         React.ChangeEvent<HTMLTextAreaElement>))=>{
-        setInputValue(state=>({...state, [e.target.name]:e.target.value}))
+        //setInputValue(state=>({...state, [e.target.name]:e.target.value}))
+        dispatch({
+            type:"CHANGE_VALUE",
+            payload:{
+                nameField:e.target.name,
+                valueField:e.target.value
+            }
+        })
     }
+
+    const resetField=()=>{
+        console.log('reset')
+        dispatch({
+            type:"RESET"
+        })
+    }
+
     const submitForm=(e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
+        console.log('Add')
         if(tabs===1) {
             setSubs(subs=>([...subs,inputsValue]))
-            setInputValue({
-                userName:'',
-                times:0,
-                avatar:'',
-                description:''
+            dispatch({
+                type:"RESET"
             })
         }
         else {
@@ -75,11 +83,12 @@ const Form = ({tabs, setTabs, setSubs}:FromProps) => {
         <div className='form'>
         <Tabs tabs={tabs} setTabs={setTabs} />
         <form onSubmit={submitForm}>
-            <input value={inputsValue.userName} onChange={handlChange} type="text" name="userName" placeholder="userName..." />
-            <input value={inputsValue.times} onChange={handlChange} type="number" name="times" placeholder="times..." />
-            <input value={inputsValue.avatar} onChange={handlChange} type="text" name="avatar" placeholder="avatar..." />
-            <textarea value={inputsValue.description} onChange={handlChange} name="description" placeholder="description..." />
-            <input type="submit" value="submit" />
+            <input  onChange={handlChange} type="text" name="userName" placeholder="userName..." />
+            <input  onChange={handlChange} type="number" name="times" placeholder="times..." />
+            <input  onChange={handlChange} type="text" name="avatar" placeholder="avatar..." />
+            <textarea  onChange={handlChange} name="description" placeholder="description..." />
+            <button type="button" onClick={resetField}>Reset</button>
+            <button type="submit">Submit</button>
         </form>
     </div>
   )
@@ -92,7 +101,8 @@ const Form = ({tabs, setTabs, setSubs}:FromProps) => {
             <input ref={timesRef} type="number" name="times" placeholder="times..." />
             <input ref={avatarRef} type="text" name="avatar" placeholder="avatar..." />
             <textarea ref={descriptionRef} name="description" placeholder="description..." />
-            <input type="submit" value="submit" />
+            <button type="button" onClick={resetField}>Reset</button>
+            <button type="submit">Submit</button>
         </form>
     </div>
   )
